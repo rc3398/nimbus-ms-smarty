@@ -13,13 +13,11 @@ CORS(app)
 
 '''
 TODO:
-- Add caching, flask logging via sentry.io, 
-- Add middleware to check if requestor is authorized to make this call
-- Use the AWS Parameters and Secrets Lambda Extension instead of AWS SDK for secrets manager
+- Cache secrets using AWS Lambda extensions
 
 Decisions: 
-- keep only freeform? yes, for now.
-- store constants in a shared file?
+- keep only freeform? yes
+- store constants in a shared file? no.
 '''
 
 CONTENT_TYPE_JSON = "application/json"
@@ -72,11 +70,6 @@ def verify_address_freeform(address):
     #result = Response(json.dumps(result_candidate), status=200, content_type=CONTENT_TYPE_JSON)
     result = json.dumps(result_candidate)
     return result
-
-
-@app.route('/debug-sentry', methods=["GET"])
-def trigger_error():
-    division_by_zero = 1 / 0
 
 
 def get_secret():
@@ -134,8 +127,20 @@ if __name__ == '__main__':
 
 '''
 Documentation
+
 https://flask.palletsprojects.com/en/2.2.x/errorhandling/#returning-api-errors-as-json
+
 https://docs.sentry.io/platforms/python/
+
 https://requests.readthedocs.io/en/latest/user/quickstart/
+
+https://www.smarty.com/docs/cloud/us-street-api 
+
+https://github.com/smartystreets/smartystreets-python-sdk
+
+https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/cache-secrets-using-aws-lambda-extensions.html
+
+https://docs.aws.amazon.com/lambda/latest/dg/invocation-layers.html
+
 
 '''
