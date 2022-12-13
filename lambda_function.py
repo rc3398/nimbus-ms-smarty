@@ -1,4 +1,3 @@
-import os
 import json
 import logging
 from smarty.app import verify_address_freeform
